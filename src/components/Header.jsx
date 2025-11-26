@@ -1,7 +1,7 @@
 
-const Header = () => {
+const Header = ( {styling} ) => {
   return (
-    <div>Every This is going to be ok, brother. Just hang in there and do the work bro. </div>
+    <div className= {styling}>Every This is going to be ok, brother. Just hang in there and do the work bro. </div>
   )
 }
 
