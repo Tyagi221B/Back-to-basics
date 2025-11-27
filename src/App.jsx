@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import DisplayTodo from "./components/DisplayTodo";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    const saved = localStorage.getItem('todos')
+    return saved ? JSON.parse(saved) : []
+  });
+
   const [inputText, setInputText] = useState("");
   console.log("Current Todos:", todos);
 
   const [editingId, setEditingId] = useState(null)
   const [editText, setEditText] = useState("")
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
+
+
+  
+  
 
   const addTodo = () => {
     // check if inputText is empty
@@ -39,6 +51,9 @@ function App() {
   };
 
   const editTodo = (id, newText) => {
+    if (newText.trim() === "") {
+      alert("Bro isme kuch daalo to sahi bro!!")
+    }
     setTodos(todos.map((todo) => (
       todo.id == id ? {...todo, text: newText} : todo
     )))
@@ -69,7 +84,7 @@ function App() {
 
       <div className="border border-amber-400 min-h-8 min-w-80">
         {todos.length == 0 ? (
-          <div>No Todos Yet!</div>
+          <div>Shower it with your Todo's!</div>
         ) : (
           <div>
             {todos.map((todo) => (
