@@ -28,7 +28,11 @@ function App() {
 
   const toggleComplete = (id) => {
     console.log("Toggling todo with id:", id);
-    setTodos(todos.map((todo) => todo.id == id ? {...todo, completed: !todo.completed} : todo))
+    setTodos(
+      todos.map((todo) =>
+        todo.id == id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
   };
 
   return (
