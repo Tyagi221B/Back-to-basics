@@ -7,6 +7,9 @@ function App() {
   const [inputText, setInputText] = useState("");
   console.log("Current Todos:", todos);
 
+  const [editingId, setEditingId] = useState(null)
+  const [editText, setEditText] = useState("")
+
   const addTodo = () => {
     // check if inputText is empty
     if (inputText.trim() !== "") {
@@ -27,13 +30,26 @@ function App() {
   };
 
   const toggleComplete = (id) => {
-    console.log("Toggling todo with id:", id);
+    // console.log("Toggling todo with id:", id);
     setTodos(
       todos.map((todo) =>
         todo.id == id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
+
+  const editTodo = (id, newText) => {
+    setTodos(todos.map((todo) => (
+      todo.id == id ? {...todo, text: newText} : todo
+    )))
+    setEditingId(null)
+    setEditText("")
+  }
+
+  const startEdit = (id, currentText) => {
+    setEditingId(id)
+    setEditText(currentText)
+  }
 
   return (
     <div className="flex gap-4 flex-col justify-center items-center min-h-screen">
@@ -62,6 +78,12 @@ function App() {
                 todo={todo}
                 deleteTodo={deleteTodo}
                 toggleComplete={toggleComplete}
+
+                editTodo = {editTodo}
+                editingId = {editingId}
+                editText = {editText}
+                setEditText = {setEditText}
+                startEdit = {startEdit}
               />
             ))}
           </div>
